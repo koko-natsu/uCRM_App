@@ -13,12 +13,11 @@ const showingNavigationDropdown = ref(false);
 <template>
     <div>
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            <nav class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
-                <!-- Primary Navigation Menu -->
+            <!-- <nav class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
                         <div class="flex">
-                            <!-- Logo -->
+
                             <div class="shrink-0 flex items-center">
                                 <Link :href="route('dashboard')">
                                     <ApplicationLogo
@@ -27,16 +26,18 @@ const showingNavigationDropdown = ref(false);
                                 </Link>
                             </div>
 
-                            <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
+                                </NavLink>
+                                <NavLink :href="route('items.index')" :active="route().current('items.*')">
+                                    Item
                                 </NavLink>
                             </div>
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
-                            <!-- Settings Dropdown -->
+
                             <div class="ml-3 relative">
                                 <Dropdown align="right" width="48">
                                     <template #trigger>
@@ -73,7 +74,6 @@ const showingNavigationDropdown = ref(false);
                             </div>
                         </div>
 
-                        <!-- Hamburger -->
                         <div class="-mr-2 flex items-center sm:hidden">
                             <button
                                 @click="showingNavigationDropdown = !showingNavigationDropdown"
@@ -106,7 +106,6 @@ const showingNavigationDropdown = ref(false);
                     </div>
                 </div>
 
-                <!-- Responsive Navigation Menu -->
                 <div
                     :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }"
                     class="sm:hidden"
@@ -117,7 +116,6 @@ const showingNavigationDropdown = ref(false);
                         </ResponsiveNavLink>
                     </div>
 
-                    <!-- Responsive Settings Options -->
                     <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
                         <div class="px-4">
                             <div class="font-medium text-base text-gray-800 dark:text-gray-200">
@@ -134,19 +132,68 @@ const showingNavigationDropdown = ref(false);
                         </div>
                     </div>
                 </div>
-            </nav>
+                
+            </nav> -->
+
+            <div class="flex flex-between min-h-screen bg-gray-100 dark:bg-gray-900">
+                <nav class="flex flex-col overflow-y-hidden w-1/6 px-3 border-r-2 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+
+                    <!-- Logo -->
+                    <div class="shrink-0 flex items-center pt-5">
+                        <Link :href="route('dashboard')">
+                            <ApplicationLogo
+                                class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200 mb-5"
+                            />
+                        </Link>
+                    </div>
+
+                    <!-- nav -->
+                    <div class="flex flex-col gap-96">
+                        <!-- menu -->
+                        <div class="flex flex-col p-4 items-center">
+                            <div class="flex flex-col">
+                                <NavLink class="font-bold text-2xl tracking-tight m-2" :href="route('dashboard')" :active="route().current('dashboard')">
+                                    Dashboard
+                                </NavLink>
+                                <NavLink class="font-bold text-2xl tracking-tight m-2" :href="route('items.index')" :active="route().current('items.*')">
+                                    商品一覧
+                                </NavLink>
+                                <NavLink class="font-bold text-2xl tracking-tight m-2">
+                                    顧客管理
+                                </NavLink>
+                                <NavLink class="font-bold text-2xl tracking-tight m-2">
+                                    購入履歴
+                                </NavLink>
+                                <NavLink class="font-bold text-2xl tracking-tight m-2">
+                                    データ分析
+                                </NavLink>
+                            </div>
+                        </div>
+
+                        <!-- profile -->
+                        <div class="flex flex-col p-2 mx-2 bg-white dark:bg-gray-700 rounded-xl">
+                                <NavLink class="font-bold text-lg tracking-tight m-2" :href="route('profile.edit')">Profile</NavLink>
+                                <NavLink class="font-bold text-lg tracking-tight m-2" :href="route('logout')" method="post" as="button">Log Out</NavLink>
+                        </div>
+                    </div>
+                </nav>
+
+                <main class="w-5/6">
+                    <slot />
+                </main>
+            </div>
 
             <!-- Page Heading -->
-            <header class="bg-white dark:bg-gray-800 shadow" v-if="$slots.header">
+            <!-- <header class="bg-white dark:bg-gray-800 shadow" v-if="$slots.header">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     <slot name="header" />
                 </div>
-            </header>
+            </header> -->
 
             <!-- Page Content -->
-            <main>
+            <!-- <main>
                 <slot />
-            </main>
+            </main> -->
         </div>
     </div>
 </template>
