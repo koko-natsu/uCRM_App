@@ -23,19 +23,20 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => '',
-            'memo' => '',
-            'price' => '',
-            'is_selling' => '',
+            'name' => 'required|max:50',
+            'memo' => 'max:255',
+            'price' => 'numeric|min:1',
+            'is_selling' => 'boolean',
         ]);
 
-        $item = Item::create([
+        Item::create([
             'name' => $data['name'],
             'memo' => $data['memo'],
             'price' => $data['price'],
             'is_selling' => $data['is_selling'],
         ]);
 
-        return new ResourcesItem($item);
+        $items = Item::all();
+        return new ItemCollection($items);
     }
 }

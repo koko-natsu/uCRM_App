@@ -150,21 +150,21 @@ const showingNavigationDropdown = ref(false);
                     <!-- nav -->
                     <div class="flex flex-col gap-96">
                         <!-- menu -->
-                        <div class="flex flex-col p-4 items-center">
-                            <div class="flex flex-col">
-                                <NavLink class="font-bold text-2xl tracking-tight m-2" :href="route('dashboard')" :active="route().current('dashboard')">
+                        <div class="flex flex-col p-4">
+                            <div class="flex flex-col items-center">
+                                <NavLink class="font-bold text-xl tracking-tight m-2" :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
-                                <NavLink class="font-bold text-2xl tracking-tight m-2" :href="route('items.index')" :active="route().current('items.*')">
+                                <NavLink class="font-bold text-xl tracking-tight m-2" :href="route('items.index')" :active="route().current('items.*')">
                                     商品一覧
                                 </NavLink>
-                                <NavLink class="font-bold text-2xl tracking-tight m-2">
+                                <NavLink class="font-bold text-xl tracking-tight m-2">
                                     顧客管理
                                 </NavLink>
-                                <NavLink class="font-bold text-2xl tracking-tight m-2">
+                                <NavLink class="font-bold text-xl tracking-tight m-2">
                                     購入履歴
                                 </NavLink>
-                                <NavLink class="font-bold text-2xl tracking-tight m-2">
+                                <NavLink class="font-bold text-xl tracking-tight m-2">
                                     データ分析
                                 </NavLink>
                             </div>
@@ -178,7 +178,7 @@ const showingNavigationDropdown = ref(false);
                     </div>
                 </nav>
 
-                <main class="w-5/6">
+                <main class="w-5/6 p-5 overflow-y-hidden">
                     <slot />
                 </main>
             </div>

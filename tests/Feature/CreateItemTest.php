@@ -36,20 +36,24 @@ class CreateItemTest extends TestCase
         $this->assertCount(1, Item::all());
         $this->assertEquals('TestItem', $item->name);
 
-        $response->assertStatus(201)
+        $response->assertStatus(200)
             ->assertJson([
                 'data' => [
-                    'type' => 'items',
-                    'item_id' => $item->id,
-                    'attributes' => [
-                        'name' => $item->name,
-                        'memo' => $item->memo,
-                        'price' => $item->price,
-                        'is_selling' => $item->is_selling,
+                    [
+                        'data' => [
+                            'type' => 'items',
+                            'item_id' => $item->id,
+                            'attributes' => [
+                                'name' => $item->name,
+                                'memo' => $item->memo,
+                                'price' => $item->price,
+                                'is_selling' => $item->is_selling,
+                            ]
+                        ],
+                        'links' => [
+                            'self' => url('/items/' .$item->id),
+                        ],
                     ]
-                ],
-                'links' => [
-                    'self' => url('/items/' .$item->id),
                 ]
             ]);
     }
