@@ -39,4 +39,31 @@ class ItemController extends Controller
         $items = Item::all();
         return new ItemCollection($items);
     }
+ 
+    public function update(Request $request)
+    {
+        $item = Item::find($request->item_id);
+
+        $data = $request->validate([
+            'name' => 'required|max:50',
+            'memo' => 'max:255',
+            'price' => 'numeric|min:1',
+            'is_selling' => 'boolean',
+        ]);
+
+        $item->update($data);
+
+        $items = Item::all();
+        return new ItemCollection($items);
+    }
+
+    public function destroy(Request $request)
+    {
+        $item = Item::find($request->item_id);
+
+        $item->delete();
+
+        $items = Item::all();
+        return new ItemCollection($items);
+    }
 }

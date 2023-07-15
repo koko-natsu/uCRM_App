@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Items;
 
 use App\Models\Item;
 use App\Models\User;
@@ -22,8 +22,6 @@ class RetrieveItemTest extends TestCase
     /** @test */
     function a_user_can_retrieve_items()
     {
-        $this->withoutExceptionHandling();
-
         $this->actingAs($user = User::find(1));
 
         Item::factory(5)->create();
@@ -55,5 +53,35 @@ class RetrieveItemTest extends TestCase
                     )
                 )
             );
+    }
+
+
+    /** @test */
+    function a_user_can_retrieve_a_item()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->actingAs($user = User::find(1));
+
+        $item = Item::factory()->create();
+
+        $response = $this->get("/api/items/{$item->id}");
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'data' => [
+                    'type' => 'items',
+                    'item_id' => $item->id,
+                    'attributes' => [
+                        'name' => $item->name,
+                        'price' => $item->price,
+                        'memo' => $item->memo,
+                        'is_selling' => $item->is_selling,
+                    ]
+                ],
+                'links' => [
+                    'self' => url("/items/{$item->id}")
+                ]
+            ]);
     }
 }
