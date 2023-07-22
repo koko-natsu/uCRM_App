@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\RetrieveItemController;
 use Illuminate\Http\Request;
@@ -14,6 +15,8 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::patch('/items/{item_id}', [ItemController::class, 'update']);
     Route::delete('/items/{item_id}', [ItemController::class, 'destroy']);
     Route::get('/items/{item_id}', [RetrieveItemController::class, 'retrieveItem']);
+
+    Route::post('/customers', [CustomerController::class, 'store']);
 });
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -20,6 +21,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     route::get('/items', [ItemController::class, 'index'])->name('items.index');
+    route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
 });
 
 require __DIR__.'/auth.php';
