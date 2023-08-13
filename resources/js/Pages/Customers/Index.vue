@@ -5,6 +5,8 @@ import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { reactive } from 'vue';
 import { genderColor } from '@/genderColor'
+import { form } from '@/customerState'
+import { getAddress } from '@/getAddress'
 import SubmitButton from '@/Components/SubmitButton.vue';
 import axios from 'axios';
 
@@ -14,31 +16,10 @@ const props = defineProps({
     },
 })
 
-const data = reactive({
-    customers: props.customers,
-})
-
 const showInputModal = ref(false)
 const modalHeader = ref('')
-
-
-const form = reactive({
-    name: {
-        first_name: '',
-        last_name: '',
-    },
-    kana: {
-        first_name: '',
-        last_name: '',
-    },
-    tel: null,
-    email: null,
-    postcode: null,
-    address: null,
-    birthday: null,
-    gender: 1,
-    memo: null,
-    errors: {},
+const data = reactive({
+    customers: props.customers,
 })
 
 const storeCustomer = async function() {
@@ -51,16 +32,6 @@ const storeCustomer = async function() {
         })
         .catch(error => {
             console.log(error.response.data.errors);
-        })
-}
-
-const  getAddress = async () => {
-    await axios.get(`/api/retrieve-address/${form.postcode}`)
-        .then(res => {
-            form.address = res.data.address
-        })
-        .catch(error => {
-            console.log(res.response.data.message);
         })
 }
 </script>
@@ -158,7 +129,7 @@ const  getAddress = async () => {
                                         class="lg:w-1/2 rounded-lg drop-shadow-md border-gray-300"
                                         pattern="\d{3}-\d{4}">
                                     <button
-                                        @click="getAddress"
+                                        @click="getAddress(form.postcode)"
                                         class="border-2 ml-5 px-4 py-2 rounded-xl">住所検索</button>
                                 </div>
 
