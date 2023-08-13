@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreItemRequest;
+use App\Http\Requests\UpdateItemRequest;
 use App\Http\Resources\Item as ResourcesItem;
 use App\Http\Resources\ItemCollection;
 use App\Models\Item;
@@ -13,49 +15,33 @@ class ItemController extends Controller
 
     public function index()
     {
-        $items = Item::all();
+        $items = Item::orderByDesc('created_at')->get();
 
         return Inertia::render('Items/Index', [
             'items' => new ItemCollection($items)
         ]);
     }
 
-    public function store(Request $request)
+
+    public function store(StoreItemRequest $validated_data, Item $item)
     {
-        $data = $request->validate([
-            'name' => 'required|max:50',
-            'memo' => 'max:255',
-            'price' => 'numeric|min:1',
-            'is_selling' => 'boolean',
-        ]);
+        $item->create($validated_data->all());
 
-        Item::create([
-            'name' => $data['name'],
-            'memo' => $data['memo'],
-            'price' => $data['price'],
-            'is_selling' => $data['is_selling'],
-        ]);
-
-        $items = Item::all();
+        $items = Item::orderByDesc('created_at')->get();
         return new ItemCollection($items);
     }
- 
-    public function update(Request $request)
+
+
+    public function update(UpdateItemRequest $validated_data)
     {
-        $item = Item::find($request->item_id);
+        $item = Item::findOrFail(request()->item_id);
 
-        $data = $request->validate([
-            'name' => 'required|max:50',
-            'memo' => 'max:255',
-            'price' => 'numeric|min:1',
-            'is_selling' => 'boolean',
-        ]);
+        $item->update($validated_data->all());
 
-        $item->update($data);
-
-        $items = Item::all();
+        $items = Item::orderByDesc('created_at')->get();
         return new ItemCollection($items);
     }
+
 
     public function destroy(Request $request)
     {
@@ -63,7 +49,7 @@ class ItemController extends Controller
 
         $item->delete();
 
-        $items = Item::all();
+        $items = Item::orderByDesc('created_at')->get();
         return new ItemCollection($items);
     }
 }

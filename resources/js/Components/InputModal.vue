@@ -17,7 +17,7 @@ const close = () => {
 <template>
     <Transition name="modal">
         <div v-if="show"  class="modal-mask flex fixed z-[9998] top-0 left-0 w-full h-full bg-black/30">
-            <div class="modal-container w-1/3 bg-white m-auto p-10 rounded-lg shadow-indigo-500/50 ease-ln duration-300">
+            <div class="modal-container w-2/5 bg-white m-auto p-10 rounded-lg shadow-indigo-500/50 ease-ln duration-300">
                 <div class="flex justify-end">
                     <button
                         class="modal-default-button"

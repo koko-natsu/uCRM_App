@@ -29,16 +29,32 @@ class EditItemTest extends TestCase
     /** @test */
     function a_user_can_change_item_info()
     {
+        $this->withoutExceptionHandling();
+
         $this->actingAs(User::find(1));
         $item = Item::find(1);
         $this->assertEquals('New Item', $item->name);
 
-        $this->patch('/api/items/1', [
+        $response = $this->patch('/api/items/1', [
             'name' => 'Update Item'
-        ])->assertStatus(200);
+        ]);
 
         $item = Item::find(1);
-        $this->assertEquals('Update Item', $item->name);
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'data' => [
+                    [
+                        'data' => [
+                            'type' => 'items',
+                            'item_id' => $item->id,
+                            'attributes' => [
+                                'name' => 'Update Item'
+                            ]
+                        ]
+                    ]
+                ]
+            ]);
     }
 
 }

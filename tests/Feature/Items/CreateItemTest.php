@@ -22,7 +22,7 @@ class CreateItemTest extends TestCase
     /** @test */
     function a_user_can_create_a_item()
     {
-        $this->actingAs($user = User::find(1));
+        $this->actingAs(User::find(1));
 
         $response = $this->post('/api/items', [
             'name' => 'TestItem',

@@ -2,49 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterCustomerRequest;
+use App\Http\Requests\UpdateCustomerRequest;
 use App\Http\Resources\CustomerCollection;
 use App\Models\Customer;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class CustomerController extends Controller
 {
     public function index()
     {
-        $customers = Customer::all();
+        $customers = Customer::orderByDesc('created_at')->get();
 
         return Inertia::render('Customers/Index', [
             'customers' => new CustomerCollection($customers)
         ]);
     }
 
-    public function store(Request $request)
+
+    public function store(RegisterCustomerRequest $request, Customer $customer)
     {
-        $data = $request->validate([
-            'name' => 'required|string|max:50',
-            'kana' => 'required|string|max:50',
-            'tel' => 'numeric',
-            'email' => '',
-            'postcode' => 'numeric',
-            'address' => 'string',
-            'birthday' => '',
-            'gender' => 'numeric',
-            'memo' => 'string|max:255',
-        ]);
+        $customer->create($request->all());
 
-        Customer::create([
-            'name' => $data['name'],
-            'kana' => $data['kana'],
-            'tel' => $data['tel'],
-            'email' => $data['email'],
-            'postcode' => $data['postcode'],
-            'address' => $data['address'],
-            'birthday' => $data['birthday'],
-            'gender' => $data['gender'],
-            'memo' => $data['memo'],
-        ]);
+        $customers = Customer::orderByDesc('created_at')->get();
+        return new CustomerCollection($customers);
+    }
 
-        $customers = Customer::all();
+    public function update(UpdateCustomerRequest $validated_data) {
+        $customer = Customer::findOrFail(request()->customer_id);
+
+        $customer->update($validated_data->all());
+
+        $customers = Customer::orderByDesc('created_at')->get();
+
         return new CustomerCollection($customers);
     }
 }

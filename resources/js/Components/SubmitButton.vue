@@ -13,7 +13,7 @@ const emit = defineEmits(['submitEvent'])
 
 const handleClick = event => {
     if(processing.value) return
-    processing.value - true
+    processing.value = true
     event.preventDefault()
     return new Promise((resolve, reject) => {
         setTimeout(() => {

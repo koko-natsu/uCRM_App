@@ -30,7 +30,7 @@ class RegisterCustomerTest extends TestCase
             'name' => 'テスト太郎',
             'kana' => 'テストタロウ',
             'tel' => '09012345678',
-            'email' => 'test@k.test.com',
+            'email' => 'test@test.com',
             'postcode' => '1234567',
             'address' => 'テスト県テスト市',
             'birthday' => '1900-01-01',
