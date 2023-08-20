@@ -5,10 +5,12 @@ import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { reactive } from 'vue';
 import { genderColor } from '@/genderColor'
-import { form } from '@/customerState'
+import { form, deleteFormContent } from '@/customerState'
 import { getAddress } from '@/getAddress'
+import InputError from '@/Components/InputError.vue';
 import SubmitButton from '@/Components/SubmitButton.vue';
 import CustomerTable from '@/Components/CustomerTable.vue';
+import axios from 'axios';
 
 const props = defineProps({
     customers: {
@@ -22,17 +24,61 @@ const data = reactive({
     customers: props.customers,
 })
 
-const storeCustomer = async function() {
+const mergingNames = () => {
     form.name = form.name.last_name.concat(' ', form.name.first_name)
     form.kana = form.kana.last_name.concat(' ', form.kana.first_name)
-    await axios.post('/api/customers', form)
-        .then(res => {
+}
+
+const storeCustomer = async () => {
+    try {
+        mergingNames();
+        const response = await axios.post('/api/customers', form);
+        data.customers = response.data;
+        showInputModal.value = false;
+    } catch(errors) {
+        console.log(errors);
+    }
+}
+
+const retrieveCustomer = async customer_id => {
+    try {
+        const response = await axios.get(`/api/customers/${customer_id}`);
+
+        form.customer_id = response.data.data.customer_id
+        Object.assign(form, response.data.data.attributes)
+        modalHeader.value = '顧客情報編集'
+        showInputModal.value = true
+    } catch(errors) {
+        console.log(errors);
+    }
+
+}
+
+
+const updateCustomer = async customer_id => {
+    try {
+        mergingNames();
+        const response = await axios.patch(`/api/customers/${customer_id}`, form);
+        showInputModal.value = false;
+        data.customers = response.data;
+    } catch(errors) {
+        console.log(errors.response);
+    }
+
+    deleteFormContent();
+}
+
+
+const removeCustomer = async customer_id => {
+    if(confirm("顧客情報を削除しますか？")) {
+        try {
+            const response = await axios.delete(`/api/customers/${customer_id}`);
             showInputModal.value = false;
-            data.customers = res.data;
-        })
-        .catch(error => {
-            console.log(error.response.data.errors);
-        })
+            data.customers = response.data;
+        } catch(errors) {
+            console.log(errors.response);
+        }
+    }
 }
 </script>
 
@@ -46,7 +92,7 @@ const storeCustomer = async function() {
                 <Teleport to="body">
                     <InputModal
                         :show="showInputModal"
-                        @close="showInputModal = false"
+                        @close="showInputModal = false; deleteFormContent()"
                         class="overflow-y-scroll">
                         <template #header>
                             {{ modalHeader }}
@@ -149,7 +195,20 @@ const storeCustomer = async function() {
                                     :message="msg">
                                 </InputError>
 
-                                <div class="flex justify-end mt-5">
+                                <div v-if="form.name" class="text-right mr-5">
+                                    <SubmitButton
+                                        class="border rounded-lg p-2 mr-5"
+                                        @submit-event="removeCustomer(form.customer_id)"
+                                        type="submit">削除</SubmitButton>
+
+                                    <SubmitButton
+                                        class="border rounded-lg p-2"
+                                        @submit-event="updateCustomer(form.customer_id)"
+                                        type="submit">更新</SubmitButton>
+                                </div>
+
+                                <div v-else class="flex justify-end mt-5">
+
                                     <SubmitButton
                                         @submit-event="storeCustomer()"
                                         class="border rounded-t-lg p-2"
@@ -168,7 +227,8 @@ const storeCustomer = async function() {
                 </div>
 
                 <CustomerTable 
-                    :customers="customers"/>
+                    :customers="data.customers.data"
+                    @getCustomer="retrieveCustomer"/>
             </div>
         </div>
 

@@ -22,7 +22,7 @@ class RetrieveItemTest extends TestCase
     /** @test */
     function a_user_can_retrieve_items()
     {
-        $this->actingAs($user = User::find(1));
+        $this->actingAs(User::find(1));
 
         Item::factory(5)->create();
         $this->assertCount(5, Item::all());
@@ -61,7 +61,7 @@ class RetrieveItemTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->actingAs($user = User::find(1));
+        $this->actingAs(User::find(1));
 
         $item = Item::factory()->create();
 

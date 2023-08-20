@@ -53,6 +53,14 @@ class EditCustomerTest extends TestCase
                         'customer_id' => $edited_customer->id,
                         'attributes' => [
                             'name' => 'テスト次郎',
+                            'kana' => 'テストタロウ',
+                            'tel' => '09012345678',
+                            'email' => 'test@test.com',
+                            'postcode' => '1234567',
+                            'address' => 'テスト県テスト市',
+                            'birthday' => '1900-01-01',
+                            'gender' => 1,
+                            'memo' => 'memo',
                         ]
                     ]
                 ]

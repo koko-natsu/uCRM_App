@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Inertia\Testing\AssertableInertia as Assert;
+use Symfony\Component\VarDumper\VarDumper;
 use Tests\TestCase;
 
 class RetrieveCustomersTest extends TestCase
@@ -38,5 +39,48 @@ class RetrieveCustomersTest extends TestCase
                     ->etc()
                     )
             );
+    }
+
+
+    /** @test */
+    function can_retrieve_a_customer_info()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->actingAs(User::find(1));
+        $customer = Customer::factory()->create();
+
+        $response = $this->get("/api/customers/{$customer->id}");
+
+        list($last_name, $fist_name) = preg_split("/\s/", $customer->name);
+        list($last_kana, $fist_kana) = preg_split("/\s/", $customer->kana);
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'data' => [
+                    'type' => 'customers',
+                    'customer_id' => $customer->id,
+                    'attributes' => [
+                        'name' =>[
+                            'first_name' => $fist_name,
+                            'last_name'  => $last_name,
+                        ],
+                        'kana' =>[
+                            'first_name' => $fist_kana,
+                            'last_name'  => $last_kana,
+                        ],
+                        'tel' => $customer->tel,
+                        'email' => $customer->email,
+                        'postcode' => $customer->postcode,
+                        'address' => $customer->address,
+                        'birthday' => $customer->birthday,
+                        'gender' => $customer->gender,
+                        'memo' => $customer->memo,
+                    ]
+                ],
+                'links' => [
+                    'self' => url("/customers/{$customer->id}")
+                ]
+            ]);
     }
 }

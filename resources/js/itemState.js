@@ -10,6 +10,7 @@ export const form = reactive({
 })
 
 export const deleteFormContent = () => {
+    form.item_id='';
     form.name='';
     form.price='';
     form.memo='';

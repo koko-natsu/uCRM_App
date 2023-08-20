@@ -37,14 +37,11 @@ const storeItem = () => {
 
 const retrieveItem = item_id => {
     axios.get(`/api/items/${item_id}`)
-        .then(res => {
-            form.item_id = res.data.data.item_id
-            form.name = res.data.data.attributes.name
-            form.price = res.data.data.attributes.price
-            form.memo = res.data.data.attributes.memo
-            form.is_selling = res.data.data.attributes.is_selling
+    .then(res => {
             showInputModal.value = true
-            modalHeader.value = 'Edit Item'
+            modalHeader.value = '商品情報編集'
+            form.item_id = res.data.data.item_id
+            Object.assign(form, res.data.data.attributes)
         })
         .catch(error => {
         })
@@ -58,7 +55,7 @@ const updateItem = item_id => {
             deleteFormContent()
         })
         .catch(error => {
-            form.errors = error.response.form.errors
+            form.errors = error.response
         })
 }
 
@@ -118,7 +115,7 @@ const removeItem = item_id => {
                             :message="msg">
                         </InputError>
 
-                        <div v-if="form.item_id" class="text-right mr-5">
+                        <div v-if="form.name" class="text-right mr-5">
                             <SubmitButton
                                 class="border rounded-lg p-2 mr-5"
                                 @submit-event="removeItem(form.item_id)"
@@ -161,7 +158,8 @@ const removeItem = item_id => {
                     <div>
                         <button 
                             class="bg-white font-bold ml-10 px-5 py-2 border rounded-xl"
-                            @click="showInputModal = true; modalHeader = 'Create Item'">New</button>
+                            @click="showInputModal = true; modalHeader = '新規商品作成'">New
+                        </button>
                     </div>
                 </div>
 

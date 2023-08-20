@@ -24,7 +24,7 @@ class UpdateCustomerRequest extends FormRequest
         return [
             'name' => 'string|max:50',
             'kana' => 'string|max:50',
-            'tel' => 'numeric|unique:customers',
+            'tel' => 'numeric',
             'email' => 'email:rfc,dns',
             'postcode' => 'numeric',
             'address' => 'string',

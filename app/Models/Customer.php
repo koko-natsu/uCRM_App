@@ -9,15 +9,15 @@ class Customer extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'kana',
-        'tel',
-        'email',
-        'postcode',
-        'address',
-        'birthday',
-        'gender',
-        'memo',
+    protected $guarded = [
+        'customer_id'
     ];
+
+
+    protected static function getCustomers()
+    {
+        return (new static)
+            ->orderByDesc('created_at')
+            ->get();
+    }
 }

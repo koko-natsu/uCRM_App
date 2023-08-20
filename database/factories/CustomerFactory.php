@@ -26,7 +26,7 @@ class CustomerFactory extends Factory
             'email' => $this->faker->email,
             'postcode' => $this->faker->postcode,
             'address' => $address,
-            'birthday' => $this->faker->datetime,
+            'birthday' => $this->faker->datetime->format('Y-m-d H:i'),
             'gender' => $this->faker->numberBetween(0, 2),
             'memo' => $this->faker->realText(50),
         ];
