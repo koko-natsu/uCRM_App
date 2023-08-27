@@ -13,6 +13,8 @@ class ItemSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('items')->truncate();
+
         DB::table('items')->insert([
             [
             'name' => 'カット',

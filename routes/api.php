@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RetrieveAddressController;
 use App\Http\Controllers\RetrieveCustomerController;
 use App\Http\Controllers\RetrieveItemController;
@@ -13,16 +14,28 @@ Route::middleware('auth:sanctum')->group(function() {
         return $request->user();
     });
 
-    Route::post('/items', [ItemController::class, 'store']);
-    Route::patch('/items/{item_id}', [ItemController::class, 'update']);
-    Route::delete('/items/{item_id}', [ItemController::class, 'destroy']);
-    
-    Route::post('/customers', [CustomerController::class, 'store']);
-    Route::patch('/customers/{customer_id}', [CustomerController::class, 'update']);
-    Route::delete('/customers/{customer_id}', [CustomerController::class, 'destroy']);
+    Route::controller(ItemController::class)->group(function () {
+        Route::post('/items', 'store');
+        Route::patch('/items/{item_id}', 'update');
+        Route::delete('/items/{item_id}', 'destroy');
+    });
+
+    Route::controller(CustomerController::class)->group(function () {
+        Route::post('/customers', 'store');
+        Route::patch('/customers/{customer_id}', 'update');
+        Route::delete('/customers/{customer_id}', 'destroy');
+    });
+
+    Route::controller(PurchaseController::class)->group(function () {
+        Route::post('/purchases', 'store');
+        Route::patch('/purchases/{purchase_id}', 'update');
+        Route::delete('/purchases/{purchase_id}', 'destroy');
+    });
     
     Route::get('/items/{item_id}', [RetrieveItemController::class, 'retrieveItem']);
+
     Route::get('/customers/{customer_id}', [RetrieveCustomerController::class, 'retrieveCustomer']);
+
     Route::get('/retrieve-address/{postcode}', [RetrieveAddressController::class, 'retrieveAddress']);
 });
 

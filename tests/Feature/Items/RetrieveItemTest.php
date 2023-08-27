@@ -4,6 +4,7 @@ namespace Tests\Feature\Items;
 
 use App\Models\Item;
 use App\Models\User;
+use Database\Seeders\ItemSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;;
 use Inertia\Testing\AssertableInertia as Assert;
@@ -17,6 +18,7 @@ class RetrieveItemTest extends TestCase
     {
         parent::setUp();
         User::factory()->create();
+        $this->seed([ItemSeeder::class]);
     }
 
     /** @test */
@@ -24,8 +26,7 @@ class RetrieveItemTest extends TestCase
     {
         $this->actingAs(User::find(1));
 
-        Item::factory(5)->create();
-        $this->assertCount(5, Item::all());
+        $this->assertCount(3, Item::all());
         
         $response = $this->get('/items');
         $item = Item::first();
@@ -33,7 +34,7 @@ class RetrieveItemTest extends TestCase
         $response->assertStatus(200)
             ->assertInertia(fn (Assert $page) => $page
                 ->has('items', fn(Assert $page) => $page
-                    ->has('data', 5, fn(Assert $page) => $page
+                    ->has('data', 3, fn(Assert $page) => $page
                         ->has('data', fn(Assert $page) => $page
                             ->where('type', 'items')
                             ->where('item_id', $item->id)
@@ -63,7 +64,7 @@ class RetrieveItemTest extends TestCase
 
         $this->actingAs(User::find(1));
 
-        $item = Item::factory()->create();
+        $item = Item::find(1);
 
         $response = $this->get("/api/items/{$item->id}");
 

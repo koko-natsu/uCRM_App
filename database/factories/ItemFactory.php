@@ -17,10 +17,26 @@ class ItemFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->jobTitle(),
-            'memo' => fake()->text(),
-            'price' => fake()->randomNumber(5, false),
-            'is_selling' => fake()->boolean(),
+        //     'name' => fake()->jobTitle(),
+        //     'memo' => fake()->text(),
+        //     'price' => fake()->randomNumber(5, false),
+        //     'is_selling' => fake()->boolean(),
+        // ];
+            [
+                'name' => 'カット',
+                'memo' => 'カットの詳細',
+                'price' => 6000,
+                ],
+                [
+                'name' => 'カラー',
+                'memo' => 'カラーの詳細',
+                'price' => 8000,
+                ],
+                [
+                'name' => 'パーマ(カット込み)',
+                'memo' => 'パーマの詳細',
+                'price' => 13000,
+                ]
         ];
     }
 }

@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Customer;
 use App\Models\User;
+use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Inertia\Testing\AssertableInertia as Assert;
@@ -17,7 +18,10 @@ class RetrieveCustomersTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        User::factory()->create();
+        $this->seed([
+            UserSeeder::class,
+        ]);
+        Customer::factory(5)->create();
     }
 
     /** @test */
@@ -26,7 +30,7 @@ class RetrieveCustomersTest extends TestCase
         $this->withoutExceptionHandling();
 
         $this->actingAs(User::find(1));
-        $customers = Customer::factory(5)->create();
+        $customers = Customer::all();
 
         $this->assertCount(5, $customers);
 

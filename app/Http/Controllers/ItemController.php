@@ -12,10 +12,9 @@ use Inertia\Inertia;
 
 class ItemController extends Controller
 {
-
     public function index()
     {
-        $items = Item::orderByDesc('created_at')->get();
+        $items = Item::getItems();
 
         return Inertia::render('Items/Index', [
             'items' => new ItemCollection($items)
@@ -27,7 +26,7 @@ class ItemController extends Controller
     {
         $item->create($validated_data->all());
 
-        $items = Item::orderByDesc('created_at')->get();
+        $items = Item::getItems();
         return new ItemCollection($items);
     }
 
@@ -38,7 +37,7 @@ class ItemController extends Controller
 
         $item->update($validated_data->all());
 
-        $items = Item::orderByDesc('created_at')->get();
+        $items = Item::getItems();
         return new ItemCollection($items);
     }
 
@@ -49,7 +48,7 @@ class ItemController extends Controller
 
         $item->delete();
 
-        $items = Item::orderByDesc('created_at')->get();
+        $items = Item::getItems();
         return new ItemCollection($items);
     }
 }

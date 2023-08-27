@@ -13,7 +13,7 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        $customers = Customer::orderByDesc('created_at')->get();
+        $customers = Customer::getCustomers();
 
         return Inertia::render('Customers/Index', [
             'customers' => new CustomerCollection($customers)

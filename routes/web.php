@@ -3,6 +3,7 @@
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PurchaseController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -22,6 +23,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     route::get('/items', [ItemController::class, 'index'])->name('items.index');
     route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
+    route::get('/purchases', [PurchaseController::class, 'index'])->name('purchases.index');
 });
 
 require __DIR__.'/auth.php';

@@ -4,6 +4,7 @@ namespace Tests\Feature\Items;
 
 use App\Models\Item;
 use App\Models\User;
+use Database\Seeders\ItemSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -16,6 +17,7 @@ class RemoveItemTest extends TestCase
     {
         parent::setUp();
         User::factory()->create();
+        $this->seed(ItemSeeder::class);
     }
 
     /** @test */
@@ -25,12 +27,11 @@ class RemoveItemTest extends TestCase
 
         $this->actingAs(User::find(1));
 
-        Item::factory(5)->create();
-        $this->assertCount(5, Item::all());
+        $this->assertCount(3, Item::all());
 
         $this->delete('/api/items/1')
             ->assertStatus(200);
 
-        $this->assertCount(4, Item::all());
+        $this->assertCount(2, Item::all());
     }
 }
