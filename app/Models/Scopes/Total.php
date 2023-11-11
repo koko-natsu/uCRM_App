@@ -15,7 +15,7 @@ class Total implements Scope
     {
         $sql = "select purchases.id as purchase_id,
                 purchases.status,
-                purchases.created_at as purchase_day,
+                purchases.created_at,
                 purchases.customer_id,
                 items.price * item_purchases.quantity as subtotal
                 from purchases

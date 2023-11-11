@@ -87,6 +87,7 @@ class RetrieveOrdersTest extends TestCase
                                 ->where('total', $total)
                                 ->where('purchase_day', $date)
                                 ->has('customer')
+                                ->has('receipt')
                             )
                         )
                         ->has('links', fn(Assert $page) => $page

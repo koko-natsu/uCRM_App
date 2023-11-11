@@ -31,8 +31,6 @@ class CreatePurchaseTest extends TestCase
     /** @test */
     function a_user_can_create_a_purchase()
     {
-        $this->withoutExceptionHandling();
-        
         $this->actingAs(User::find(1));
         $customer = Customer::find(1);
 
@@ -60,7 +58,7 @@ class CreatePurchaseTest extends TestCase
                     'quantity' => 1,
                 ],
                 [
-                    'item_id' => 2,
+                    'item_id' => 3,
                     'quantity' => 4,
                 ],
             ]
@@ -71,9 +69,10 @@ class CreatePurchaseTest extends TestCase
         $this->assertCount(2, Purchase::all());
         $this->assertCount(4, ItemPurchases::all());
 
-        $total = (Item::find(1)->price * 1) + (Item::find(2)->price * 4);
+        $total_1 = (Item::find(1)->price * 1) + (Item::find(2)->price * 4);
+        $total_2 = (Item::find(1)->price * 1) + (Item::find(3)->price * 4);
 
-        list($date, $_) = preg_split('/ /', $purchase->created_at);   
+        list($date, $_) = preg_split('/ /', $purchase->created_at);
 
         $response->assertStatus(200)
             ->assertJson([
@@ -84,7 +83,7 @@ class CreatePurchaseTest extends TestCase
                             'purchase_id' => 1,
                             'attributes'  => [
                                 'status'  => 1,
-                                'total'   => $total,
+                                'total'   => $total_1,
                                 'purchase_day' => $date,
                                 'customer' => [
                                     'data' => [
@@ -95,6 +94,9 @@ class CreatePurchaseTest extends TestCase
                                     'links' => [
                                         'self' => url('/customers/' . $customer->id),
                                     ]
+                                ],
+                                'receipt' => [
+
                                 ],
                             ]
                         ],
@@ -108,7 +110,7 @@ class CreatePurchaseTest extends TestCase
                             'purchase_id' => 2,
                             'attributes'  => [
                                 'status'  => 1,
-                                'total'   => $total,
+                                'total'   => $total_2,
                                 'purchase_day' => $date,
                                 'customer' => [
                                     'data' => [

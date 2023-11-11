@@ -6,6 +6,7 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RetrieveAddressController;
 use App\Http\Controllers\RetrieveCustomerController;
 use App\Http\Controllers\RetrieveItemController;
+use App\Http\Controllers\RetrievePurchaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +38,8 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::get('/customers/{customer_id}', [RetrieveCustomerController::class, 'retrieveCustomer']);
 
     Route::get('/retrieve-address/{postcode}', [RetrieveAddressController::class, 'retrieveAddress']);
+
+    Route::get('/purchases/{purchase_id}', [RetrievePurchaseController::class, 'retrievePurchase']);
 });
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

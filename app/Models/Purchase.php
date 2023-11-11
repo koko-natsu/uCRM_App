@@ -11,8 +11,6 @@ class Purchase extends Model
 
     protected $guarded = [];
 
-
-
     public function customer()
     {
         return $this->belongsTo(Customer::class);
@@ -21,6 +19,8 @@ class Purchase extends Model
     public function items()
     {
         return $this->belongsToMany(Item::class, 'item_purchases', 'purchase_id', 'item_id')
-            ->withPivot('quantity');
+            ->withPivot('quantity')
+            ->as('receipt')
+            ->withTimestamps();
     }
 }

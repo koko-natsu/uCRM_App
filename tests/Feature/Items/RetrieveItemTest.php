@@ -42,6 +42,7 @@ class RetrieveItemTest extends TestCase
                                 ->where('name', $item->name)
                                 ->where('memo', $item->memo)
                                 ->where('price', $item->price)
+                                ->where('created_at', $item->created_at->format('Y/m/d'))
                                 ->whereType('is_selling', 'integer|1')
                             )
                         )

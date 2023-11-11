@@ -18,7 +18,7 @@ class PurchaseController extends Controller
         $purchases = Order::select(DB::raw('*, SUM(subtotal) as total'))
             ->groupBy('purchase_id')->get();
 
-        return Inertia::render('Purchase/Index', [
+        return Inertia::render('Purchases/Index', [
             'purchases' => new PurchaseCollection($purchases)
         ]);
     }
@@ -53,6 +53,42 @@ class PurchaseController extends Controller
         catch(Exception $error)
         {
             DB::rollBack();
+        }
+
+        $purchases = Order::select(DB::raw('*, SUM(subtotal) as total'))
+            ->groupBy('purchase_id')->get();
+
+        return new PurchaseCollection($purchases);
+    }
+
+
+    public function update(Request $request)
+    {
+        $purchase = Purchase::find($request->purchase_id);
+
+        $data = $request->validate([
+            'customer_id' => 'required|integer',
+            'status' => 'required|boolean',
+            'items.*.item_id' => 'required|integer',
+            'items.*.quantity' => 'required|integer',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            $purchase->customer_id = $data['customer_id'];
+            $purchase->status = $data['status'];
+            $purchase->save();
+
+            foreach($data['items'] as $item) {
+                $purchase->items()->updateExistingPivot($item['item_id'], [
+                    'quantity' => $item['quantity']
+                ]);
+            }
+
+            DB::commit();
+
+        } catch(\Exception $e) {
         }
 
         $purchases = Order::select(DB::raw('*, SUM(subtotal) as total'))
