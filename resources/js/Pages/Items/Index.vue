@@ -142,25 +142,39 @@ const removeItem = item_id => {
 
         <div class="flex flex-wrap w-full">
             <div class="grow m-auto">
-
-                <div class="flex align-middle px-5 py-3 w-full h-20 bg-slate-700 mb-5">
                     <!-- Search Bar -->
-                    <div class="flex items-center justify-between w-full">
-                        <div class="text-white font-bold text-xl">Items</div>
-                        <div class="flex">
-                            <div class="relative flex justify-end w-1/2 fill-slate-500">
-                                <input type="text" class="border-none" placeholder="Search Item">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="1.2em" viewBox="0 0 512 512" class="absolute top-2.5 right-3"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
-                            </div>
-                            <button 
-                                class="bg-white font-bold ml-10 px-5 py-2"
-                                @click="showInputModal = true; modalHeader = '新規商品作成'">Create Item
-                            </button>
+                    <div class="flex items-center justify-end w-full mt-4 mb-4">
+                        <div class="relative flex justify-end w-1/2 fill-slate-500">
+                            <input type="text" class="text-xs pr-10 rounded-md border-none bg-[#ecf0fb]" placeholder="Search Item">
+                            <svg xmlns="http://www.w3.org/2000/svg" height=".8em" viewBox="0 0 512 512" class="absolute top-2.5 right-3"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
                         </div>
+                        <button
+                            class="bg-[#0144dd] text-white text-sm font-bold rounded-md ml-10 px-5 py-2"
+                            @click="showInputModal = true; modalHeader = '商品新規作成'">商品新規作成
+                        </button>
                     </div>
-                </div>
+                    <!-- SortBar -->
+                    <div class="flex justify-between items-center px-5">
+                        <div class="flex">
+                            <div class="relative flex items-center bg-[#ecf0fb] rounded-full pr-3">
+                                <small class="px-2 text-[#717377]">name</small>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" class="absolute top-1.5 right-1.5" fill="#717377" viewBox="0 0 320 512"><path d="M182.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z"/></svg>
+                            </div>
+                            <div class="relative flex items-center pr-3 bg-[#ecf0fb] rounded-full">
+                                <small class="px-2 text-[#717377]">price</small>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" class="absolute top-1.5 right-1.5" fill="#717377" viewBox="0 0 320 512"><path d="M182.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z"/></svg>
+                            </div>
+                            <div class="relative flex items-center pr-3 bg-[#ecf0fb] rounded-full">
+                                <small class="px-2 text-[#717377]">created at</small>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" class="absolute top-1.5 right-1.5" fill="#717377" viewBox="0 0 320 512"><path d="M182.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z"/></svg>
+                            </div>
+                        </div>
 
-                <div class="px-10">
+                        <small class="font-bold text-[#717377]">Total Items: 3</small>
+                        
+                    </div>
+
+                <div class="px-5">
                     <ItemsTable 
                         :items="data.items"
                         @getItem="retrieveItem"/>
