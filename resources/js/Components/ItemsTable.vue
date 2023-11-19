@@ -27,10 +27,10 @@ const props = defineProps({
                 <td class="px-2 py-3 text-start font-medium">{{ item.data.attributes.name }}</td>
                 <td class="py-3 text-start text-gray-400 font-medium">{{ item.data.attributes.created_at }}</td>
                 <td class="px-4 py-3 text-center font-medium">{{ item.data.attributes.price.toLocaleString() }}</td>
-                <td v-if="item.data.attributes.is_selling" class="px-5 py-3 text-center">
+                <td v-if="item.data.attributes.is_selling" class="px-5 py-2 text-center">
                     <div class="py-2 bg-lime-600 text-white rounded-lg font-semibold">販売可</div>
                 </td>
-                <td v-else class="px-5 py-3 text-center">
+                <td v-else class="px-5 py-2 text-center">
                     <div class="py-2 bg-rose-500 text-white rounded-lg font-semibold">品切れ</div>
                 </td>
                 <td class="px-4 py-3 text-start font-medium">{{ item.data.attributes.memo }}</td>

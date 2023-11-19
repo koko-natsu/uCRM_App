@@ -150,7 +150,7 @@ const removeItem = item_id => {
                         </div>
                         <button
                             class="bg-[#0144dd] text-white text-sm font-bold rounded-md ml-10 px-5 py-2"
-                            @click="showInputModal = true; modalHeader = '商品新規作成'">商品新規作成
+                            @click="showInputModal = true; modalHeader = '商品登録'">商品登録
                         </button>
                     </div>
                     <!-- SortBar -->
