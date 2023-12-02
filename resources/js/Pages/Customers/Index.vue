@@ -216,14 +216,12 @@ const removeCustomer = async customer_id => {
                 </template>
             </InputModal>
         </Teleport>
-
-
-        <div class="flex flex-wrap w-full">
+<div class="flex flex-wrap w-full">
             <div class="grow m-auto">
             <!-- Search Bar -->
                 <div class="flex items-center justify-end w-full mt-4 mb-4">
                     <div class="relative flex justify-end w-1/2 fill-slate-500">
-                        <input type="text" class="text-xs pr-10 rounded-md border-none bg-[#ecf0fb]" placeholder="Search Item">
+                        <input type="text" class="text-xs pr-10 rounded-md border-none bg-[#ecf0fb]" placeholder="Search Customer">
                         <svg xmlns="http://www.w3.org/2000/svg" height=".8em" viewBox="0 0 512 512" class="absolute top-2.5 right-3"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
                     </div>
                     <button
@@ -248,7 +246,7 @@ const removeCustomer = async customer_id => {
                         </div>
                     </div>
 
-                    <small class="font-bold text-[#717377]">Total Items: 3</small>
+                    <small class="font-bold text-[#717377]">Total Customers: 50</small>
                     
                 </div>
 
@@ -258,6 +256,8 @@ const removeCustomer = async customer_id => {
                     @getCustomer="retrieveCustomer"/>
             </div>
         </div>
+
+        
     </div> 
 
 

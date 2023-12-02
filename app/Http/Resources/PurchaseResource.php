@@ -23,7 +23,7 @@ class PurchaseResource extends JsonResource
                 'purchase_id' => $this->purchase_id ?? $this->id,
                 'attributes' => [
                     'status' => $this->status,
-                    'total'  => $this->total,
+                    'total'  => (int)$this->total,
                     'purchase_day' => $date,
                     'customer' => new CustomerResource(Customer::find($this->customer_id)),
                     'receipt' => new ReceiptCollection($this->findReceipt($this->id ?? $this->purchase_id)),

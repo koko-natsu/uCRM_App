@@ -21,8 +21,13 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    // ItemsController
     route::get('/items', [ItemController::class, 'index'])->name('items.index');
+
+    // CustomersController
     route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
+
+    // PurchasesController
     route::get('/purchases', [PurchaseController::class, 'index'])->name('purchases.index');
 });
 
