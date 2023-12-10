@@ -2,8 +2,6 @@
 import { form } from '@/itemState';
 import SubmitButton from '@/Components/SubmitButton.vue';
 import InputError from '@/Components/InputError.vue';
-
-
 </script>
 
 <template>

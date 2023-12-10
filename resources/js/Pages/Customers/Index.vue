@@ -1,16 +1,15 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import InputModal from '@/Components/InputModal.vue';
-import { Head } from '@inertiajs/vue3';
-import { ref } from 'vue';
-import { reactive } from 'vue';
-import { genderColor } from '@/genderColor'
-import { form, deleteFormContent } from '@/customerState'
-import { getAddress } from '@/getAddress'
 import InputError from '@/Components/InputError.vue';
 import SubmitButton from '@/Components/SubmitButton.vue';
 import CustomerTable from '@/Components/CustomerTable.vue';
-import axios from 'axios';
+import SortAndFilter from '@/Components/SortAndFilter.vue';
+import { Head } from '@inertiajs/vue3';
+import { ref, reactive } from 'vue';
+import { genderColor } from '@/genderColor'
+import { form, deleteFormContent } from '@/customerState'
+import { getAddress } from '@/getAddress'
 
 const props = defineProps({
     customers: {
@@ -18,8 +17,6 @@ const props = defineProps({
     },
 })
 
-const showInputModal = ref(false)
-const modalHeader = ref('')
 const data = reactive({
     customers: props.customers,
 })
@@ -29,6 +26,17 @@ const mergingNames = () => {
     form.kana = form.kana.last_name.concat(' ', form.kana.first_name)
 }
 
+
+// Sort and Search
+const gridColumns = { 'name': '顧客名', 'purchase_day': '購入日', 'num_of_purchases': '購入回数'}
+
+
+// Modal
+const showInputModal = ref(false)
+const modalHeader = ref('')
+
+
+// CRUD
 const storeCustomer = async () => {
     try {
         mergingNames();

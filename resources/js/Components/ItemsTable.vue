@@ -9,7 +9,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <table class="table-auto w-full whitespace-normal overflow-hidden bg-white">
+    <table v-if="props.items.length" class="table-auto w-full whitespace-normal overflow-hidden bg-white">
         <thead>
             <tr class="border-2 text-sm">
                 <th class="text-start pl-3 py-3 tracking-wider font-medium text-md">No.</th>
@@ -22,7 +22,7 @@ const props = defineProps({
             </tr>
         </thead>
         <tbody>
-            <tr v-for="item in items.data" :key="item.id" class="border-2 text-xs">
+            <tr v-for="item in items" :key="item.id" class="border-2 text-xs">
                 <td class="pl-4 py-3 text-start text-gray-400 font-medium">{{ item.data.item_id }}</td>
                 <td class="px-2 py-3 text-start font-medium">{{ item.data.attributes.name }}</td>
                 <td class="py-3 text-start text-gray-400 font-medium">{{ item.data.attributes.created_at }}</td>
@@ -42,4 +42,7 @@ const props = defineProps({
             </tr>
         </tbody>
     </table>
+    <div v-else class="flex justify-center mt-20 text-gray-500">
+        No Items
+    </div>
 </template>
