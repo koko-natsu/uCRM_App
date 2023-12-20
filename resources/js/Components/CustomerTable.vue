@@ -3,7 +3,7 @@ import { genderColor } from '@/genderColor'
 
 defineEmits(['getCustomer'])
 
-defineProps({
+const props = defineProps({
     customers: {
         type: Object
     }
@@ -12,11 +12,11 @@ defineProps({
 </script>
 
 <template>
-    <table class="table-auto w-full whitespace-normal overflow-hidden bg-white">
+    <table v-if="props.customers.length" class="table-auto w-full whitespace-normal overflow-hidden bg-white">
         <thead>
             <tr class="border-2 text-sm">
-                <th class="text-center px-2 py-3 tracking-wider font-medium text-md">名前</th>
-                <th class="text-center px-2 py-3 tracking-wider font-medium text-md">読み仮名</th>
+                <th class="text-center px-2 py-3 tracking-wider font-medium text-md">氏名</th>
+                <!-- <th class="text-center px-2 py-3 tracking-wider font-medium text-md">読み仮名</th> -->
                 <th class="text-center px-2 py-3 tracking-wider font-medium text-md">最終購入日</th>
                 <th class="text-center px-2 py-3 tracking-wider font-medium text-md">購入回数</th>
                 <th class="text-center px-2 py-3 tracking-wider font-medium text-md">Contact</th>
@@ -26,8 +26,8 @@ defineProps({
         </thead>
         <tbody>
             <tr v-for="customer in customers" :key="customer.id" class="border-2 text-xs">
-                <td class="px-4 py-3 text-center font-medium text-sm">{{ customer.data.attributes.name }}</td>
-                <td class="px-4 py-3 text-center font-medium">{{ customer.data.attributes.kana }}</td>
+                <td class="px-4 py-3 text-center font-medium">{{ customer.data.attributes.name }} ({{ customer.data.attributes.kana }})</td>
+                <!-- <td class="px-4 py-3 text-center font-medium">{{ customer.data.attributes.kana }}</td> -->
                 <td class="px-4 py-3 text-center text-gray-400 font-medium">2022-10-03</td>
                 <td class="px-4 py-3 text-center text-gray-400 font-medium">10</td>
                 <td class="px-4 py-3 text-center font-medium">
@@ -53,4 +53,7 @@ defineProps({
             </tr>
         </tbody>
     </table>
+    <div v-else class="flex justify-center mt-20 text-gray-500">
+        No Customers
+    </div>
 </template>
