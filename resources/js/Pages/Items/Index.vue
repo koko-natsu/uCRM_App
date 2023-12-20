@@ -16,9 +16,11 @@ const props = defineProps({
     items: Object,
 })
 
+const sortedData = reactive({
+    data: props.items.data });
+
 // Sort and Search
 const gridColumns = {'name': '商品名', 'price': '金額', 'created_at': '作成日'};
-const sortedData = reactive({ data: props.items.data });
 const retrieveSortedData = data => {
     sortedData.data = data
 }
