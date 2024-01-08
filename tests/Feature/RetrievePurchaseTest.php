@@ -5,10 +5,10 @@ namespace Tests\Feature;
 use App\Models\Customer;
 use App\Models\Purchase;
 use App\Models\User;
+use App\Http\Traits\Date;
 use Database\Seeders\ItemSeeder;
 use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class RetrievePurchaseTest extends TestCase
@@ -29,8 +29,6 @@ class RetrievePurchaseTest extends TestCase
     /** @test */
     function retrieve_purchase_details()
     {
-        $this->withoutExceptionHandling();
-
         $this->actingAs(User::find(1));
         $customer = Customer::find(1);
 
@@ -52,7 +50,7 @@ class RetrievePurchaseTest extends TestCase
         $purchase = Purchase::find(1);
         $response = $this->get('/api/purchases/' . $purchase->id);
 
-        list($date, $_) = preg_split('/ /', $purchase->created_at);
+        $date = Date::excerptDate($purchase->created_at);
         
         $response->assertStatus(200)
             ->assertJson([

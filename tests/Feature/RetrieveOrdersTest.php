@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\Item;
 use App\Models\Purchase;
 use App\Models\User;
+use App\Http\Traits\Date;
 use Database\Seeders\ItemSeeder;
 use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -71,7 +72,7 @@ class RetrieveOrdersTest extends TestCase
 
         $purchase = Purchase::find(1);
 
-        list($date, $_) = preg_split('/ /', $purchase->created_at); 
+        $date = Date::excerptDate($purchase->created_at);
 
         $response = $this->get('/purchases');
 

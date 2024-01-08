@@ -7,6 +7,7 @@ use App\Models\Item;
 use App\Models\ItemPurchases;
 use App\Models\Purchase;
 use App\Models\User;
+use App\Http\Traits\Date;
 use Database\Seeders\ItemSeeder;
 use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -72,7 +73,7 @@ class CreatePurchaseTest extends TestCase
         $total_1 = (Item::find(1)->price * 1) + (Item::find(2)->price * 4);
         $total_2 = (Item::find(1)->price * 1) + (Item::find(3)->price * 4);
 
-        list($date, $_) = preg_split('/ /', $purchase->created_at);
+        $date = Date::excerptDate($purchase->created_at);
 
         $response->assertStatus(200)
             ->assertJson([
@@ -95,9 +96,8 @@ class CreatePurchaseTest extends TestCase
                                         'self' => url('/customers/' . $customer->id),
                                     ]
                                 ],
-                                'receipt' => [
-
-                                ],
+                                // receiptのテストは、RetrievePurchaseTestで済み
+                                'receipt' => [],
                             ]
                         ],
                         'links' => [
@@ -122,6 +122,7 @@ class CreatePurchaseTest extends TestCase
                                         'self' => url('/customers/' . $customer->id),
                                     ]
                                 ],
+                                'receipt' => [],
                             ]
                         ],
                         'links' => [
@@ -129,9 +130,6 @@ class CreatePurchaseTest extends TestCase
                         ]
                     ],
                 ],
-                'links' => [
-                    'self' => url('/purchases'),
-                ]
             ]);
     }
 }

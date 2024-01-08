@@ -21,7 +21,6 @@ class RemoveCustomerTest extends TestCase
     /** @test */
     function can_remove_a_customer()
     {
-        $this->withoutExceptionHandling();
 
         $this->actingAs(User::find(1));
         Customer::factory(5)->create();
