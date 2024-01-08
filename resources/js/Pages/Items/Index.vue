@@ -86,82 +86,6 @@ const removeItem = item_id => {
 <template>
     <Head title="Item" />
     <AuthenticatedLayout>
-
-        <!-- Input Modal -->
-        <Teleport to="body">
-            <InputModal :show="showModal"
-                @close="showModal = false;
-                deleteFormContent()">
-                <template #header>
-                    {{ modalHeader }}
-                </template>
-
-                <template #body>
-                    <div class="flex flex-col">
-                        <label name="name">商品名</label>
-                        <input class="m-5 mt-2 rounded-lg"
-                            type="text"
-                            v-model="form.name">
-                        <InputError 
-                            v-for="msg in form.errors.name"
-                            :message="msg">
-                        </InputError>
-                        <label name="price">金額</label>
-                        <input class="m-5 mt-2 rounded-lg"
-                            type="number"
-                            v-model="form.price">
-                        <InputError v-for="msg in form.errors.price"
-                            :message="msg">
-                        </InputError>
-                        <label name="is_selling">ステータス</label>
-                        <div>
-                            <input class="m-4 mr-2"
-                                type="radio"
-                                value="1"
-                                v-model="form.is_selling"
-                                id="selling">
-                            <label for="selling">販売可</label>
-                            <input  class="m-4 mr-2"
-                                type="radio" value="0"
-                                v-model="form.is_selling" 
-                                id="not_selling">
-                            <label for="not_selling">売切れ</label>
-                        </div>
-                        <label name="memo">メモ</label>
-                        <textarea class="m-5 mt-2 rounded-lg resize-none" 
-                            type="text"
-                            v-model="form.memo">
-                        </textarea>
-                        <InputError
-                            v-for="msg in form.errors.memo"
-                            :message="msg">
-                        </InputError>
-
-                        <div v-if="form.item_id" class="text-right mr-5">
-                            <SubmitButton
-                                class="border rounded-lg p-2 mr-5"
-                                @submit-event="removeItem(form.item_id)"
-                                type="submit">Remove</SubmitButton>
-
-                            <SubmitButton
-                                class="border rounded-lg p-2"
-                                @submit-event="updateItem(form.item_id)"
-                                type="submit">Update</SubmitButton>
-                        </div>
-
-                        <div v-else class="text-right mr-5">
-                            <SubmitButton 
-                                class="border rounded-lg p-2"
-                                @submit-event="storeItem"
-                                type="submit">Create</SubmitButton>
-                        </div>
-
-                    </div>
-                </template>
-            </InputModal> 
-        </Teleport>
-
-
         <div class="flex flex-wrap w-full">
             <div class="grow m-auto">
                 <div class="flex items-center justify-end w-full mt-4 mb-4">
@@ -189,5 +113,77 @@ const removeItem = item_id => {
         </div> 
 
     </AuthenticatedLayout>
+
+    <!-- Input Modal -->
+    <InputModal :show="showModal"
+            @close="showModal = false;
+            deleteFormContent()">
+            <template #header>
+                {{ modalHeader }}
+            </template>
+
+            <template #body>
+                <div class="flex flex-col">
+                    <label name="name">商品名</label>
+                    <input class="m-5 mt-2 rounded-lg"
+                        type="text"
+                        v-model="form.name">
+                    <InputError 
+                        v-for="msg in form.errors.name"
+                        :message="msg">
+                    </InputError>
+                    <label name="price">金額</label>
+                    <input class="m-5 mt-2 rounded-lg"
+                        type="number"
+                        v-model="form.price">
+                    <InputError v-for="msg in form.errors.price"
+                        :message="msg">
+                    </InputError>
+                    <label name="is_selling">ステータス</label>
+                    <div>
+                        <input class="m-4 mr-2"
+                            type="radio"
+                            value="1"
+                            v-model="form.is_selling"
+                            id="selling">
+                        <label for="selling">販売可</label>
+                        <input  class="m-4 mr-2"
+                            type="radio" value="0"
+                            v-model="form.is_selling" 
+                            id="not_selling">
+                        <label for="not_selling">売切れ</label>
+                    </div>
+                    <label name="memo">メモ</label>
+                    <textarea class="m-5 mt-2 rounded-lg resize-none" 
+                        type="text"
+                        v-model="form.memo">
+                    </textarea>
+                    <InputError
+                        v-for="msg in form.errors.memo"
+                        :message="msg">
+                    </InputError>
+
+                    <div v-if="form.item_id" class="text-right mr-5">
+                        <SubmitButton
+                            class="border rounded-lg p-2 mr-5"
+                            @submit-event="removeItem(form.item_id)"
+                            type="submit">Remove</SubmitButton>
+
+                        <SubmitButton
+                            class="border rounded-lg p-2"
+                            @submit-event="updateItem(form.item_id)"
+                            type="submit">Update</SubmitButton>
+                    </div>
+
+                    <div v-else class="text-right mr-5">
+                        <SubmitButton 
+                            class="border rounded-lg p-2"
+                            @submit-event="storeItem"
+                            type="submit">Create</SubmitButton>
+                    </div>
+
+                </div>
+            </template>
+        </InputModal>
 
 </template>
