@@ -16,12 +16,12 @@ class Item extends JsonResource
     {
         return [
             'data' => [
-                'type' => 'items',
-                'item_id' => $this->id,
-                'attributes' => [
-                    'name' => $this->name,
-                    'memo' => $this->memo,
-                    'price' => $this->price,
+                'type'           => 'items',
+                'item_id'        => $this->id,
+                'attributes'     => [
+                    'name'       => $this->name,
+                    'memo'       => $this->memo,
+                    'price'      => $this->price,
                     'is_selling' => $this->is_selling,
                     'created_at' => $this->created_at->format('Y/m/d'),
                 ]

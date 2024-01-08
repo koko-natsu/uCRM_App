@@ -26,10 +26,10 @@ const sortBy = key => {
 }
 
 const filteredData = computed(() => {
-    let data = items.data
-    let key = sortKey.value
+    let data      = items.data
+    let key       = sortKey.value
     let filterKey = searchQuery.value.toLowerCase()
-    let order = sortOrders.value[key]
+    let order     = sortOrders.value[key]
 
     if(key) {
         data = data.slice().sort((a, b) => {
@@ -40,7 +40,9 @@ const filteredData = computed(() => {
     }
 
     if(filterKey) {
-        // 
+        // FIXME: 検索システムの改善
+        // row['data']['attributes']を使用すると、データの全ての属性に検索をかけてしまい、
+        // 検索条件と意図しない結果が表示される。検索Keyを指定し配列で渡した方がよい
         data = data.filter((row) => {
             return Object.keys(row['data']['attributes']).some((key) => {
                 return String(row['data']['attributes'][key]).toLowerCase().indexOf(filterKey) > -1
