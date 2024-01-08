@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\purhcases;
+namespace Tests\Feature\purchases;
 
 use App\Models\Customer;
 use App\Models\Item;
@@ -80,7 +80,7 @@ class EditPurchasesTest extends TestCase
                             'attributes' => [
                                 'status' => Purchase::find(1)->status,
                                 'total' => $total,
-                                'purchase_day' => date('Y-m-d'),
+                                'purchase_day' => date('Y/m/d'),
                                 'customer' => [
                                     'data' => [
                                         'type' => 'customers',
