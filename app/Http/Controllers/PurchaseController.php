@@ -12,16 +12,16 @@ use Inertia\Inertia;
 
 class PurchaseController extends Controller
 {
-    
+
     public function index()
     {
-        $purchases = Order::select(DB::raw('*, SUM(subtotal) as total'))
-            ->groupBy('purchase_id')->get();
-
         return Inertia::render('Purchases/Index', [
-            'purchases' => new PurchaseCollection($purchases)
+            'purchases' => new PurchaseCollection(
+                Purchase::obtainDataWithCalcSubtotal()
+                )
         ]);
     }
+
 
     public function store(Request $request)
     {
@@ -29,21 +29,22 @@ class PurchaseController extends Controller
 
         try
         {
+            // TODO: Set up validation
             $data = $request->validate([
                 'customer_id' => '',
                 'status'      => '',
-                'items' => '',
+                'items'       => '',
             ]);
     
             $purchase = Purchase::create([
                 'customer_id' => $data['customer_id'],
-                'status' => $data['status'],
+                'status'      => $data['status'],
             ]);
 
             foreach($request->items as $item)
             {
                 $purchase->items()->attach($purchase->id, [
-                    'item_id' => $item['item_id'],
+                    'item_id'  => $item['item_id'],
                     'quantity' => $item['quantity'],
                 ]);
             }
@@ -55,10 +56,9 @@ class PurchaseController extends Controller
             DB::rollBack();
         }
 
-        $purchases = Order::select(DB::raw('*, SUM(subtotal) as total'))
-            ->groupBy('purchase_id')->get();
-
-        return new PurchaseCollection($purchases);
+        return new PurchaseCollection(
+            Purchase::obtainDataWithCalcSubtotal()
+        );
     }
 
 
@@ -67,9 +67,9 @@ class PurchaseController extends Controller
         $purchase = Purchase::find($request->purchase_id);
 
         $data = $request->validate([
-            'customer_id' => 'required|integer',
-            'status' => 'required|boolean',
-            'items.*.item_id' => 'required|integer',
+            'customer_id'      => 'required|integer',
+            'status'           => 'required|boolean',
+            'items.*.item_id'  => 'required|integer',
             'items.*.quantity' => 'required|integer',
         ]);
 
@@ -77,7 +77,7 @@ class PurchaseController extends Controller
 
         try {
             $purchase->customer_id = $data['customer_id'];
-            $purchase->status = $data['status'];
+            $purchase->status      = $data['status'];
             $purchase->save();
 
             foreach($data['items'] as $item) {
@@ -91,9 +91,20 @@ class PurchaseController extends Controller
         } catch(\Exception $e) {
         }
 
-        $purchases = Order::select(DB::raw('*, SUM(subtotal) as total'))
-            ->groupBy('purchase_id')->get();
-
-        return new PurchaseCollection($purchases);
+        return new PurchaseCollection(
+            Purchase::obtainDataWithCalcSubtotal()
+        );
     }
+
+
+    public function destroy(Request $request)
+    {
+        $purchase = Purchase::findOrFail($request->purchase_id);
+        $purchase->delete();
+
+        return new PurchaseCollection(
+            Purchase::obtainDataWithCalcSubtotal()
+        );
+    }
+
 }
