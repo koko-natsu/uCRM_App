@@ -1,6 +1,4 @@
 <script setup>
-import { genderColor } from '@/genderColor'
-
 defineEmits(['getCustomer'])
 
 const props = defineProps({
@@ -15,8 +13,8 @@ const props = defineProps({
     <table v-if="props.customers.length" class="table-auto w-full whitespace-normal overflow-hidden bg-white">
         <thead>
             <tr class="border-2 text-sm">
+                <th class="text-start pl-3 py-3 tracking-wider font-medium text-md">No.</th>
                 <th class="text-center px-2 py-3 tracking-wider font-medium text-md">氏名</th>
-                <!-- <th class="text-center px-2 py-3 tracking-wider font-medium text-md">読み仮名</th> -->
                 <th class="text-center px-2 py-3 tracking-wider font-medium text-md">最終購入日</th>
                 <th class="text-center px-2 py-3 tracking-wider font-medium text-md">購入回数</th>
                 <th class="text-center px-2 py-3 tracking-wider font-medium text-md">Contact</th>
@@ -26,10 +24,12 @@ const props = defineProps({
         </thead>
         <tbody>
             <tr v-for="customer in customers" :key="customer.id" class="border-2 text-xs">
-                <td class="px-4 py-3 text-center font-medium">{{ customer.data.attributes.name }} ({{ customer.data.attributes.kana }})</td>
-                <!-- <td class="px-4 py-3 text-center font-medium">{{ customer.data.attributes.kana }}</td> -->
-                <td class="px-4 py-3 text-center text-gray-400 font-medium">2022-10-03</td>
-                <td class="px-4 py-3 text-center text-gray-400 font-medium">10</td>
+                <td class="pl-4 py-3 text-start text-gray-400 font-medium">
+                    {{ customer.data.customer_id }}
+                </td>
+                <td class="px-4 py-3 text-start font-medium">{{ customer.data.attributes.name }} ({{ customer.data.attributes.kana }})</td>
+                <td class="px-4 py-3 text-center text-gray-400 font-medium">{{ customer.data.attributes.most_recent }}</td>
+                <td class="px-4 py-3 text-center text-gray-400 font-medium">{{ customer.data.attributes.num_of_purchases }}</td>
                 <td class="px-4 py-3 text-center font-medium">
                     <div class="flex justify-center">
                         <button class="mr-5 p-2 rounded-full bg-[#0144dd]">

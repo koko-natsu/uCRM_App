@@ -25,7 +25,7 @@ defineProps({
                     {{ purchase.data.purchase_id }}
                 </td>
                 <td class="px-2 py-3 text-start font-medium">
-                    {{ purchase.data.attributes.customer.data.attributes.name }}
+                    {{ purchase.data.attributes.customer.data.attributes.name }} ({{ purchase.data.attributes.customer.data.attributes.kana }})
                 </td>
                 <td class="py-3 text-start text-gray-400 font-medium">
                     {{ purchase.data.attributes.purchase_day }}
