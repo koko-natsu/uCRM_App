@@ -1,6 +1,8 @@
 import { reactive } from "vue"
 
 export const form = reactive({
+    // customer_idは必要ないのではなのか？
+    // CustomerControllerでは、Customerインスタンスを作成し保存してる
     customer_id: null,
     name: {
         first_name: '',
@@ -10,27 +12,27 @@ export const form = reactive({
         first_name: '',
         last_name: '',
     },
-    tel: null,
-    email: null,
+    tel:      null,
+    email:    null,
     postcode: null,
-    address: null,
+    address:  null,
     birthday: null,
-    gender: 1,
-    memo: null,
-    errors: {},
+    gender:   1,
+    memo:     null,
+    errors:   {},
 })
 
 
 export const deleteFormContent = () => {
     form.customer_id = null
-    form.name = ''
-    form.kana = ''
-    form.tel = null
-    form.email = null
-    form.postcode = null
-    form.address = null
-    form.birthday = null
-    form.gender = 1
-    form.memo = null
-    form.errors = {}
+    form.name        = ''
+    form.kana        = ''
+    form.tel         = null
+    form.email       = null
+    form.postcode    = null
+    form.address     = null
+    form.birthday    = null
+    form.gender      = 1
+    form.memo        = null
+    form.errors      = {}
 }
